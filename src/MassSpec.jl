@@ -8,39 +8,39 @@ using StatsBase
 
 import Statistics
 
-struct MassSpec{T<:Number,S<:Number} <: AbstractArray{T,1}
+struct MassSpectrum{T<:Number,S<:Number} <: AbstractArray{T,1}
     mass::Array{T,1}
     intensity::Array{S,1}
 end
 
-Base.size(ms::MassSpec) = (size(ms.mass)[1],)
-Base.getindex(ms::MassSpec, i::Integer) = (ms.mass[i], ms.intensity[i])
-Base.getindex(ms::MassSpec, i) = MassSpec(ms.mass[i], ms.intensity[i])
+Base.size(ms::MassSpectrum) = (size(ms.mass)[1],)
+Base.getindex(ms::MassSpectrum, i::Integer) = (ms.mass[i], ms.intensity[i])
+Base.getindex(ms::MassSpectrum, i) = MassSpectrum(ms.mass[i], ms.intensity[i])
 
-function Base.setindex!(ms::MassSpec, val, i::Integer)
+function Base.setindex!(ms::MassSpectrum, val, i::Integer)
     setindex!(ms.mass, val[1], i)
     setindex!(ms.intensity, val[2], i)
 end
 
-function Base.setindex!(ms::MassSpec, val, i::Union{AbstractRange, Colon})
+function Base.setindex!(ms::MassSpectrum, val, i::Union{AbstractRange, Colon})
     setindex!(ms.mass, val[:,1], i)
     setindex!(ms.intensity, val[:,2], i)
 end
 
-function Base.deleteat!(ms::MassSpec, x)
+function Base.deleteat!(ms::MassSpectrum, x)
     deleteat!(ms.mass, x)
     deleteat!(ms.intensity, x)
 end
 
 
-function MassSpec(path::AbstractString) 
+function MassSpectrum(path::AbstractString) 
     df = CSV.read(path, header=["mass", "mV"], datarow=2, delim=',', allowmissing=:none)
-    MassSpec(df.mass, df.mV)
+    MassSpectrum(df.mass, df.mV)
 end
 
-Statistics.mean(ms::MassSpec) = Statistics.mean(ms.intensity)
+Statistics.mean(ms::MassSpectrum) = Statistics.mean(ms.intensity)
 
-@recipe function f(ms::MassSpec; max_labels=15, font_size=8)
+@recipe function f(ms::MassSpectrum; max_labels=15, font_size=8)
     mass = ms.mass
     intensity = ms.intensity
     ylim := (0.0, 1.05maximum(intensity))
@@ -63,13 +63,13 @@ Statistics.mean(ms::MassSpec) = Statistics.mean(ms.intensity)
     end
 end
 
-function discretize(ms::MassSpec, rng)
+function discretize(ms::MassSpectrum, rng)
     wv = weights(ms.intensity)
     fit(Histogram, ms.mass, wv, rng; closed=:left).weights
 end
 
 mass_format(m) = Printf.@sprintf "%.1f" m
 
-export MassSpec, discretize
+export MassSpectrum, discretize
 
 end
