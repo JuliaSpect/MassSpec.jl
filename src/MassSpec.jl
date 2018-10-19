@@ -8,9 +8,9 @@ using StatsBase
 
 import Statistics
 
-struct MassSpectrum{T<:Number,S<:Number} <: AbstractArray{Tuple{T,S},1}
+struct MassSpectrum{T<:Number} <: AbstractArray{Tuple{T,T},1}
     mass::Array{T,1}
-    intensity::Array{S,1}
+    intensity::Array{T,1}
 end
 
 intensity(ms::MassSpectrum) = maximum(ms.intensity)
