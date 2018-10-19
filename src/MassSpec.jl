@@ -1,12 +1,12 @@
 module MassSpec
 
-using CSV
+import CSV
+import Statistics
+
 using DataFrames
 using Printf
 using RecipesBase
 using StatsBase
-
-import Statistics
 
 struct MassSpectrum{T<:Number} <: AbstractArray{Tuple{T,T},1}
     mass::Array{T,1}
