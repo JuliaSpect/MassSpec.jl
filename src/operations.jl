@@ -14,13 +14,13 @@ end
 Calculated the distance between two mass spectra.
 
 The return value is between 0.0 and 1.0 and is calculated based
-on the modelling each spectrum's peaks two-dimensional Gaussian in the
-mass-intensity plane and subtracting the two. The square of the resulting
+on the modelling each spectrum's peaks as a two-dimensional Gaussian in the
+mass-log10(intensity) plane and subtracting the two. The square of the resulting
 difference signal has a nice closed-form integral over the mass-intensity plane.
 """
 function distance(ms1::MassSpectrum, ms2::MassSpectrum, σmass, σintensity)
     mass = [ms1.mass; ms2.mass]
-    intensity = [ms1.intensity; ms2.intensity]
+    intensity = [log.(ms1.intensity); log.(ms2.intensity)]
     α = [ms1.intensity; -1 .* ms2.intensity]
     d = 0.0
     max_d = 0.0
