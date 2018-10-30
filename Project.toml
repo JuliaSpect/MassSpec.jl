@@ -1,11 +1,12 @@
-authors = ["S. Hessam M. Mehr <Hessam.Mehr@glasgow.ac.uk>"]
 name = "MassSpec"
 uuid = "62942310-c657-11e8-2ac5-f1c0f7dcb02d"
+authors = ["S. Hessam M. Mehr <Hessam.Mehr@glasgow.ac.uk>"]
 version = "0.1.0"
 
 [deps]
 CSV = "336ed68f-0bac-5ca0-87d4-7b16caf5d00b"
 DataFrames = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
+LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
 Printf = "de0858da-6303-5e67-8744-51eddeeeb8d7"
 RecipesBase = "3cdcf5f2-1ef4-517c-9805-6587b60abb01"
 Statistics = "10745b16-79ce-11e8-11f9-7d13ad32a3b2"

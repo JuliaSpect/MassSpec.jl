@@ -1,3 +1,5 @@
+import LinearAlgebra
+
 """Remove peaks near `mass` from spectrum `ms`.
 Peaks within `tol` of `mass` are removed."""
 function subtract(ms::MassSpectrum, mass, tol)
@@ -35,3 +37,10 @@ function distance(ms1::MassSpectrum, ms2::MassSpectrum, σmass, σintensity)
     end
     max(0.0, d) / max_d
 end
+
+function LinearAlgebra.normalize!(ms::MassSpectrum, p::Real=1)
+    LinearAlgebra.normalize!(ms.intensity, p)
+    ms
+end
+
+LinearAlgebra.normalize(ms::MassSpectrum, p::Real=1) = LinearAlgebra.normalize!(deepcopy(ms), p)
