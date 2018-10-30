@@ -40,13 +40,6 @@ function MassSpectrum(path::AbstractString)
     MassSpectrum(df.mass, df.mV)
 end
 
-Statistics.mean(ms::MassSpectrum) = Statistics.mean(ms.intensity)
-
-function discretize(ms::MassSpectrum, rng)
-    wv = weights(ms.intensity)
-    fit(Histogram, ms.mass, wv, rng; closed=:left).weights
-end
-
 mass_format(m) = Printf.@sprintf "%.1f" m
 
 include("operations.jl")

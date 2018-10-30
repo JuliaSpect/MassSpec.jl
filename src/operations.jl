@@ -38,9 +38,16 @@ function distance(ms1::MassSpectrum, ms2::MassSpectrum, σmass, σintensity)
     max(0.0, d) / max_d
 end
 
+function discretize(ms::MassSpectrum, rng)
+    wv = weights(ms.intensity)
+    fit(Histogram, ms.mass, wv, rng; closed=:left).weights
+end
+
 function LinearAlgebra.normalize!(ms::MassSpectrum, p::Real=1)
     LinearAlgebra.normalize!(ms.intensity, p)
     ms
 end
 
 LinearAlgebra.normalize(ms::MassSpectrum, p::Real=1) = LinearAlgebra.normalize!(deepcopy(ms), p)
+
+Statistics.mean(ms::MassSpectrum) = Statistics.mean(ms.intensity)
