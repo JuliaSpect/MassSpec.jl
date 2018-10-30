@@ -45,6 +45,6 @@ mass_format(m) = Printf.@sprintf "%.1f" m
 include("operations.jl")
 include("plotting.jl")
 
-export MassSpectrum, Mass, discretize, subtract, distance
+export MassSpectrum, Mass, discretize, undiscretize, subtract, distance
 
 end

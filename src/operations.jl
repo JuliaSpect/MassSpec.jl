@@ -43,6 +43,14 @@ function discretize(ms::MassSpectrum, rng)
     fit(Histogram, ms.mass, wv, rng; closed=:left).weights
 end
 
+"""
+Convert binned intensity data to a mass spectrum.
+"""
+function undiscretize(mass_bins::AbstractArray, intensities::AbstractArray, intensity_threshold = 0.05maximum(intensities))
+    indices = intensities .> intensity_threshold
+    MassSpectrum(mass_bins[indices], intensities[indices])
+end
+
 function LinearAlgebra.normalize!(ms::MassSpectrum, p::Real=1)
     LinearAlgebra.normalize!(ms.intensity, p)
     ms
